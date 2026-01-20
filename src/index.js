@@ -11,18 +11,15 @@ const app = express();
 // openssl rand -base64 32
 dotenv.config();
 
+job.start();
+
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("api/books", bookRoutes);
 
-connectDB();
-job.start();
-
 const PORT = process.env.PORT || 8880;
 app.listen(PORT, () => {
   console.log("server started on port", PORT);
-});
-app.get("/", (req, res) => {
-  res.status(200).send("you just used my api");
+  connectDB();
 });
